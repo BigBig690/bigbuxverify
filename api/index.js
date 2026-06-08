@@ -25,7 +25,7 @@ const SCOPES = process.env.DISCORD_SCOPES || 'identify email guilds.join';
 const INVITE_URL = process.env.DISCORD_INVITE_URL || '';
 const LOG_WEBHOOK = process.env.DISCORD_LOG_WEBHOOK_URL || '';
 const SUCCESS_REDIRECT_URL = process.env.SUCCESS_REDIRECT_URL || '';
-const STATE_SECRET = process.env.OAUTH_STATE_SECRET || CLIENT_SECRET || 'tempeststore-state-secret';
+const STATE_SECRET = process.env.OAUTH_STATE_SECRET || CLIENT_SECRET || 'bigbux-verify-state-secret';
 const REDIRECT_URI = (process.env.DISCORD_REDIRECT_URI || process.env.AUTH_REDIRECT_URI || `${PUBLIC_URL}/auth/discord/callback`).replace(/\/$/, '');
 const MONGO_URI = process.env.MONGO_URI || process.env.MONGODB_URI || process.env.DATABASE_URL || '';
 const REQUIRED_SCOPES = ['identify', 'guilds.join'];
@@ -235,10 +235,10 @@ async function notifyWebhook(user, req, result) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         username: 'BigBux Verify',
-        avatar_url: 'https://cdn.discordapp.com/embed/avatars/0.png',
+        avatar_url: `${PUBLIC_URL}/logo.png`,
         embeds: [{
           title: '✅ Verificação OAuth2 concluída',
-          color: 0x1D4ED8,
+          color: 0x8B2CFF,
           fields: [
             { name: 'Usuário', value: `${user.username}${user.discriminator && user.discriminator !== '0' ? '#' + user.discriminator : ''}`, inline: true },
             { name: 'ID', value: user.id, inline: true },
@@ -320,7 +320,7 @@ function renderResultPage({ ok, title, message, user, guildId }) {
     <section class="card result-card ${ok ? 'success' : 'error'}">
       <div class="orb orb-one"></div>
       <div class="orb orb-two"></div>
-      <img class="mini-banner" src="/logo.gif" alt="BigBux" />
+      <img class="mini-banner" src="/welcome-banner.webp" alt="BigBux" />
       <img class="avatar" src="${htmlEscape(avatar)}" alt="Avatar Discord" />
       <p class="eyebrow">BigBux Verify</p>
       <h1>${safeTitle}</h1>
