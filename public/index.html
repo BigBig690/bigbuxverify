@@ -3,73 +3,161 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#090013" />
-  <meta name="description" content="Verificação oficial da BigBux via Discord OAuth2." />
-  <meta property="og:title" content="BigBux Verify" />
-  <meta property="og:description" content="Acesso seguro ao servidor BigBux." />
-  <meta property="og:image" content="/welcome-banner.webp" />
-  <title>BigBux Verify · Verificação Discord</title>
-  <link rel="icon" href="/favicon.png" />
-  <link rel="stylesheet" href="/style.css" />
+  <meta name="theme-color" content="#09070d" />
+  <meta name="description" content="Verifica&ccedil;&atilde;o Discord da BigBux." />
+  <title>BigBux &middot; Verifica&ccedil;&atilde;o Discord</title>
+  <link rel="preload" as="image" href="/assets/hero-character.png" />
+  <link rel="preload" as="image" href="/assets/bigbux-logo.png" />
+  <link rel="preload" as="image" href="/assets/discord-logo.png" />
+  <link rel="stylesheet" href="/style.css?v=bigbux-clean-6" />
+  <script src="/app.js?v=bigbux-clean-6" defer></script>
 </head>
 <body>
-  <main class="page">
+  <div class="ambient-field" aria-hidden="true">
+    <span class="ambient-slash slash-one"></span>
+    <span class="ambient-slash slash-two"></span>
+    <span class="ambient-slash slash-three"></span>
+  </div>
+
+  <main class="site-shell">
     <nav class="nav">
-      <a class="brand" href="/" aria-label="BigBux Verify">
-        <span class="brand-mark"><img src="/logo.png" alt="" /></span>
-        <span>BigBux <b>Verify</b></span>
+      <a class="brand" href="/" aria-label="BigBux">
+        <img class="brand-mark brand-mark-image" src="/assets/bigbux-logo.png" alt="" />
+        <span>
+          <strong>BigBux</strong>
+          <small>Discord</small>
+        </span>
       </a>
       <div class="nav-actions">
-        <a class="nav-link" href="/terms">Termos</a>
-        <a class="button small primary" href="/auth/discord">Verificar agora</a>
+        <a class="nav-link" href="/privacy.html">Privacidade</a>
+        <a class="nav-cta" href="/auth/discord" data-open-verify data-auth-link>Verificar</a>
       </div>
     </nav>
 
-    <section class="hero">
+    <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow">Verificação oficial Discord</p>
-        <h1>Verifique sua conta na <span>BigBux</span>.</h1>
-        <p class="lead">
-          Autorize pelo Discord para liberar seu acesso no servidor com segurança, visual premium e sincronização automática com o bot.
-        </p>
+        <p class="eyebrow">BigBux</p>
+        <h1 id="hero-title">Verifica&ccedil;&atilde;o Discord</h1>
+        <p class="lead">Autorize sua conta e entre no servidor.</p>
+
         <div class="actions">
-          <a class="button primary" href="/auth/discord">Verificar com Discord</a>
-          <a class="button ghost" href="#como-funciona">Como funciona</a>
+          <a class="button primary" href="/auth/discord" data-open-verify data-auth-link>
+            <span>Verificar com Discord</span>
+            <span class="button-icon" aria-hidden="true">&rarr;</span>
+          </a>
+          <a class="button ghost" href="#autorizacao">
+            <span>Ver autoriza&ccedil;&atilde;o</span>
+          </a>
         </div>
       </div>
 
-      <div class="visual-card" aria-label="BigBux Verify Online">
-        <img class="hero-banner" src="/welcome-banner.webp" alt="Banner BigBux" />
-        <div class="loader-wrap" aria-hidden="true">
-          <div class="orbit orbit-one"><span></span></div>
-          <div class="orbit orbit-two"><span></span></div>
-          <div class="orbit orbit-three"><span></span></div>
-          <div class="center-logo"><img src="/logo.png" alt="BigBux" /></div>
-        </div>
-        <div class="status-box">
-          <span class="live-dot"></span>
-          BigBux Verify Online
-        </div>
+      <div class="brand-stage" aria-label="Arte tematica BigBux">
+        <div class="stage-bg"></div>
+        <div class="dark-aura" aria-hidden="true"></div>
+        <img class="brand-hero-logo" src="/assets/hero-character.png" alt="Arte tematica BigBux" />
+        <span class="magic-rune rune-one" aria-hidden="true"></span>
+        <span class="magic-rune rune-two" aria-hidden="true"></span>
+        <span class="magic-rune rune-three" aria-hidden="true"></span>
+        <span class="energy-spark spark-one" aria-hidden="true"></span>
+        <span class="energy-spark spark-two" aria-hidden="true"></span>
+        <span class="energy-spark spark-three" aria-hidden="true"></span>
+        <span class="energy-cut cut-a" aria-hidden="true"></span>
+        <span class="energy-cut cut-b" aria-hidden="true"></span>
+        <span class="energy-cut cut-c" aria-hidden="true"></span>
       </div>
     </section>
 
-    <section class="features" id="como-funciona">
-      <article>
-        <strong>1</strong>
-        <h2>Clique em verificar</h2>
-        <p>Use o botão do bot ou o botão desta página para iniciar a autorização oficial.</p>
-      </article>
-      <article>
-        <strong>2</strong>
-        <h2>Autorize no Discord</h2>
-        <p>O Discord confirma sua conta e permite sincronizar seu acesso com o servidor.</p>
-      </article>
-      <article>
-        <strong>3</strong>
-        <h2>Acesso liberado</h2>
-        <p>Ao concluir, a BigBux aplica o cargo configurado e redireciona você para o servidor.</p>
-      </article>
+    <section class="oauth-section" id="autorizacao" aria-labelledby="oauth-title">
+      <div class="section-heading">
+        <p class="eyebrow">Discord OAuth2</p>
+        <h2 id="oauth-title">Clique e autorize.</h2>
+      </div>
+
+      <div class="authorization-shell">
+        <article class="flow-step">
+          <span>01</span>
+          <h3>Abrir</h3>
+          <p>Clique em verificar.</p>
+        </article>
+        <article class="flow-step">
+          <span>02</span>
+          <h3>Autorizar</h3>
+          <p>Confirme no Discord.</p>
+        </article>
+        <article class="flow-step">
+          <span>03</span>
+          <h3>Voltar</h3>
+          <p>Voc&ecirc; volta ao servidor.</p>
+        </article>
+
+        <aside class="discord-panel" aria-label="Previa da autorizacao">
+          <div class="panel-origins">
+            <span class="origin-logo origin-store"><img src="/assets/bigbux-logo.png" alt="BigBux" /></span>
+            <span class="origin-dots" aria-hidden="true">&bull;&bull;&bull;</span>
+            <span class="origin-logo origin-discord"><img src="/assets/discord-logo.png" alt="Discord" /></span>
+          </div>
+          <p class="panel-kicker">BigBux</p>
+          <h3>quer acessar sua conta Discord</h3>
+
+          <ul class="permission-list">
+            <li><span class="permission-icon allow" aria-hidden="true">&#10003;</span>Acessar seu nome, avatar e faixa</li>
+            <li><span class="permission-icon allow" aria-hidden="true">&#10003;</span>Acessar seu endere&ccedil;o de e-mail</li>
+            <li><span class="permission-icon allow" aria-hidden="true">&#10003;</span>Saber em quais servidores voc&ecirc; est&aacute;</li>
+            <li><span class="permission-icon allow" aria-hidden="true">&#10003;</span>Entrar no servidor para voc&ecirc;</li>
+            <li class="muted-permission"><span class="permission-icon deny" aria-hidden="true">&times;</span>Ler suas mensagens privadas</li>
+          </ul>
+
+          <div class="redirect-note">
+            <span aria-hidden="true">&nearr;</span>
+            <p>Depois de autorizar, voc&ecirc; volta ao Discord.</p>
+          </div>
+
+          <div class="panel-actions">
+            <button class="button secondary" type="button" data-close-preview>Cancelar</button>
+            <a class="button primary" href="/auth/discord" data-open-verify data-auth-link>
+              <span>Continuar</span>
+              <span class="button-icon" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </aside>
+      </div>
     </section>
   </main>
+
+  <div class="modal-backdrop" id="verify-modal" aria-hidden="true">
+    <section class="discord-modal" role="dialog" aria-modal="true" aria-labelledby="verify-modal-title">
+      <button class="modal-close" type="button" data-close-verify aria-label="Fechar autorizacao">&times;</button>
+
+      <div class="panel-origins">
+        <span class="origin-logo origin-store"><img src="/assets/bigbux-logo.png" alt="BigBux" /></span>
+        <span class="origin-dots" aria-hidden="true">&bull;&bull;&bull;</span>
+        <span class="origin-logo origin-discord"><img src="/assets/discord-logo.png" alt="Discord" /></span>
+      </div>
+
+      <p class="panel-kicker">BigBux</p>
+      <h2 id="verify-modal-title">quer acessar sua conta Discord</h2>
+
+      <ul class="permission-list">
+        <li><span class="permission-icon allow" aria-hidden="true">&#10003;</span>Acessar seu nome, avatar e faixa</li>
+        <li><span class="permission-icon allow" aria-hidden="true">&#10003;</span>Acessar seu endere&ccedil;o de e-mail</li>
+        <li><span class="permission-icon allow" aria-hidden="true">&#10003;</span>Saber em quais servidores voc&ecirc; est&aacute;</li>
+        <li><span class="permission-icon allow" aria-hidden="true">&#10003;</span>Entrar no servidor para voc&ecirc;</li>
+        <li class="muted-permission"><span class="permission-icon deny" aria-hidden="true">&times;</span>Ler suas mensagens privadas</li>
+      </ul>
+
+      <div class="redirect-note">
+        <span aria-hidden="true">&nearr;</span>
+        <p>Depois de autorizar, voc&ecirc; volta ao Discord.</p>
+      </div>
+
+      <div class="modal-actions">
+        <button class="button secondary" type="button" data-close-verify>Cancelar</button>
+        <a class="button primary" href="/auth/discord" data-auth-link>
+          <span>Continuar com Discord</span>
+          <span class="button-icon" aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </section>
+  </div>
 </body>
 </html>

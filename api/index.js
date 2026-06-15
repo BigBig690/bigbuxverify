@@ -1,4 +1,4 @@
-const express = require('express');
+﻿const express = require('express');
 const crypto = require('crypto');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -25,7 +25,7 @@ const SCOPES = process.env.DISCORD_SCOPES || 'identify email guilds.join';
 const INVITE_URL = process.env.DISCORD_INVITE_URL || '';
 const LOG_WEBHOOK = process.env.DISCORD_LOG_WEBHOOK_URL || '';
 const SUCCESS_REDIRECT_URL = process.env.SUCCESS_REDIRECT_URL || '';
-const STATE_SECRET = process.env.OAUTH_STATE_SECRET || CLIENT_SECRET || 'bigbux-verify-state-secret';
+const STATE_SECRET = process.env.OAUTH_STATE_SECRET || CLIENT_SECRET || 'tempeststore-state-secret';
 const REDIRECT_URI = (process.env.DISCORD_REDIRECT_URI || process.env.AUTH_REDIRECT_URI || `${PUBLIC_URL}/auth/discord/callback`).replace(/\/$/, '');
 const MONGO_URI = process.env.MONGO_URI || process.env.MONGODB_URI || process.env.DATABASE_URL || '';
 const REQUIRED_SCOPES = ['identify', 'guilds.join'];
@@ -195,10 +195,10 @@ function makeState(guildId, options = {}) {
 
 function readState(state) {
   const [payload, signature] = String(state || '').split('.');
-  if (!payload || !signature || sign(payload) !== signature) throw new Error('State OAuth inválido. Abra a verificação novamente pelo Discord.');
+  if (!payload || !signature || sign(payload) !== signature) throw new Error('State OAuth inv\u00e1lido. Abra a verifica\u00e7\u00e3o novamente pelo Discord.');
   const parsed = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
-  if (!parsed.guildId) throw new Error('Servidor não definido no OAuth.');
-  if (parsed.iat && Date.now() - Number(parsed.iat) > 10 * 60 * 1000) throw new Error('Sessão expirada. Clique em verificar novamente.');
+  if (!parsed.guildId) throw new Error('Servidor n\u00e3o definido no OAuth.');
+  if (parsed.iat && Date.now() - Number(parsed.iat) > 10 * 60 * 1000) throw new Error('Sess\u00e3o expirada. Clique em verificar novamente.');
   return parsed;
 }
 
@@ -234,18 +234,18 @@ async function notifyWebhook(user, req, result) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        username: 'BigBux Verify',
-        avatar_url: `${PUBLIC_URL}/logo.png`,
+        username: 'BigBux',
+        avatar_url: 'https://cdn.discordapp.com/embed/avatars/0.png',
         embeds: [{
-          title: '✅ Verificação OAuth2 concluída',
-          color: 0x8B2CFF,
+          title: '\u2705 Verifica\u00e7\u00e3o OAuth2 conclu\u00edda',
+          color: 0x1D4ED8,
           fields: [
-            { name: 'Usuário', value: `${user.username}${user.discriminator && user.discriminator !== '0' ? '#' + user.discriminator : ''}`, inline: true },
+            { name: 'Usu\u00e1rio', value: `${user.username}${user.discriminator && user.discriminator !== '0' ? '#' + user.discriminator : ''}`, inline: true },
             { name: 'ID', value: user.id, inline: true },
-            { name: 'Email', value: user.email || 'Não informado', inline: false },
-            { name: 'Servidor', value: result.guildId || 'Não informado', inline: true },
-            { name: 'Cargo aplicado', value: result.roleApplied ? 'Sim' : 'Não', inline: true },
-            { name: 'OAuth salvo', value: result.mongoSaved ? 'Sim' : (result.mongoSkipped ? 'Mongo não configurado' : 'Não'), inline: true },
+            { name: 'Email', value: user.email || 'N\u00e3o informado', inline: false },
+            { name: 'Servidor', value: result.guildId || 'N\u00e3o informado', inline: true },
+            { name: 'Cargo aplicado', value: result.roleApplied ? 'Sim' : 'N\u00e3o', inline: true },
+            { name: 'OAuth salvo', value: result.mongoSaved ? 'Sim' : (result.mongoSkipped ? 'Mongo n\u00e3o configurado' : 'N\u00e3o'), inline: true },
             { name: 'IP', value: String(req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'Desconhecido').slice(0, 250), inline: false }
           ],
           timestamp: new Date().toISOString()
@@ -260,8 +260,8 @@ async function notifyWebhook(user, req, result) {
 async function joinGuildAndApplyRole({ guildId, userId, accessToken }) {
   const result = { guildId, joined: false, roleApplied: false, roleError: '' };
 
-  if (!BOT_TOKEN) throw new Error('DISCORD_BOT_TOKEN não configurado na Vercel.');
-  if (!guildId) throw new Error('DISCORD_GUILD_ID não configurado.');
+  if (!BOT_TOKEN) throw new Error('DISCORD_BOT_TOKEN n\u00e3o configurado na Vercel.');
+  if (!guildId) throw new Error('DISCORD_GUILD_ID n\u00e3o configurado.');
 
   await discordFetch(`https://discord.com/api/v10/guilds/${guildId}/members/${userId}`, {
     method: 'PUT',
@@ -312,22 +312,25 @@ function renderResultPage({ ok, title, message, user, guildId }) {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>${safeTitle} · BigBux</title>
-  <link rel="stylesheet" href="/style.css" />
+  <meta name="theme-color" content="#09070d" />
+  <title>${safeTitle} &middot; BigBux Verify</title>
+  <link rel="stylesheet" href="/style.css?v=bigbux-clean-6" />
 </head>
 <body>
+  <div class="ambient-field" aria-hidden="true">
+    <span class="ambient-slash slash-one"></span>
+    <span class="ambient-slash slash-two"></span>
+    <span class="ambient-slash slash-three"></span>
+  </div>
   <main class="page center-page">
     <section class="card result-card ${ok ? 'success' : 'error'}">
-      <div class="orb orb-one"></div>
-      <div class="orb orb-two"></div>
-      <img class="mini-banner" src="/welcome-banner.webp" alt="BigBux" />
-      <img class="avatar" src="${htmlEscape(avatar)}" alt="Avatar Discord" />
-      <p class="eyebrow">BigBux Verify</p>
+      ${user ? `<img class="avatar" src="${htmlEscape(avatar)}" alt="Avatar Discord" />` : '<img class="brand-mark brand-mark-image result-mark" src="/assets/bigbux-logo.png" alt="BigBux" />'}
+      <p class="eyebrow">BigBux &middot; Verifica&ccedil;&atilde;o</p>
       <h1>${safeTitle}</h1>
       <p class="muted">${safeMessage}</p>
       ${user ? `<div class="user-pill">Verificado como <strong>${safeName}</strong></div>` : ''}
       <div class="actions">
-        ${ok ? `<a class="button primary" href="${htmlEscape(returnUrl)}">Voltar para o servidor</a>` : `<a class="button primary" href="/auth/discord">Tentar de novo</a>`}
+        ${ok ? `<a class="button primary" href="${htmlEscape(returnUrl)}">Voltar para o Discord</a>` : `<a class="button primary" href="/auth/discord">Tentar de novo</a>`}
         ${INVITE_URL ? `<a class="button ghost" href="${htmlEscape(INVITE_URL)}">Convite do servidor</a>` : ''}
       </div>
       ${ok ? '<p class="tiny">Redirecionando automaticamente para o Discord...</p>' : ''}
@@ -340,7 +343,7 @@ function renderResultPage({ ok, title, message, user, guildId }) {
 
 app.get('/health', (_req, res) => res.json({
   ok: true,
-  service: 'BigBux Verify',
+  service: 'BigBux',
   redirect_uri: REDIRECT_URI,
   mongo_configured: !!MONGO_URI,
   required_scopes: REQUIRED_SCOPES
@@ -352,8 +355,8 @@ app.get('/auth/discord', (req, res) => {
   if (!CLIENT_ID || !CLIENT_SECRET) {
     return res.status(500).send(renderResultPage({
       ok: false,
-      title: 'OAuth2 não configurado',
-      message: 'Configure DISCORD_CLIENT_ID e DISCORD_CLIENT_SECRET nas variáveis de ambiente da Vercel.'
+      title: 'OAuth2 n\u00e3o configurado',
+      message: 'Configure DISCORD_CLIENT_ID e DISCORD_CLIENT_SECRET nas vari\u00e1veis de ambiente da Vercel.'
     }));
   }
 
@@ -361,7 +364,7 @@ app.get('/auth/discord', (req, res) => {
   if (!guildId) {
     return res.status(500).send(renderResultPage({
       ok: false,
-      title: 'Servidor não configurado',
+      title: 'Servidor n\u00e3o configurado',
       message: 'Configure DISCORD_GUILD_ID na Vercel ou envie ?guildId=ID_DO_SERVIDOR no link.'
     }));
   }
@@ -390,11 +393,11 @@ async function handleAuthCallback(req, res) {
     if (parsedState?.prompt === 'none' && parsedState?.guildId) {
       return res.redirect(`/auth/discord?guildId=${encodeURIComponent(parsedState.guildId)}&prompt=consent`);
     }
-    return res.status(400).send(renderResultPage({ ok: false, title: 'Autorização cancelada', message: error_description || error }));
+    return res.status(400).send(renderResultPage({ ok: false, title: 'Autoriza\u00e7\u00e3o cancelada', message: error_description || error }));
   }
 
   if (!code) {
-    return res.status(400).send(renderResultPage({ ok: false, title: 'Código não recebido', message: 'O Discord não retornou o código de autorização.' }));
+    return res.status(400).send(renderResultPage({ ok: false, title: 'C\u00f3digo n\u00e3o recebido', message: 'O Discord n\u00e3o retornou o c\u00f3digo de autoriza\u00e7\u00e3o.' }));
   }
 
   try {
@@ -414,7 +417,7 @@ async function handleAuthCallback(req, res) {
     });
 
     if (!token.access_token) {
-      throw new Error('Discord não retornou access_token. Tente verificar novamente.');
+      throw new Error('Discord n\u00e3o retornou access_token. Tente verificar novamente.');
     }
 
     const tokenInfo = await inspectDiscordOAuthToken(token.access_token);
@@ -426,14 +429,14 @@ async function handleAuthCallback(req, res) {
       if (parsedState.prompt === 'none') {
         return res.redirect(`/auth/discord?guildId=${encodeURIComponent(guildId)}&prompt=consent`);
       }
-      throw new Error('Você precisa aceitar as permissões de identificar conta e entrar no servidor para receber o cargo.');
+      throw new Error('Voc\u00ea precisa aceitar as permiss\u00f5es de identificar conta e entrar no servidor para receber o cargo.');
     }
 
     const user = await discordFetch('https://discord.com/api/users/@me', {
       headers: { Authorization: `${token.token_type || 'Bearer'} ${token.access_token}` }
     });
     if (tokenInfo.userId && tokenInfo.userId !== user.id) {
-      throw new Error('O token OAuth retornado não pertence ao usuário autenticado.');
+      throw new Error('O token OAuth retornado n\u00e3o pertence ao usu\u00e1rio autenticado.');
     }
 
     const joinResult = await joinGuildAndApplyRole({ guildId, userId: user.id, accessToken: token.access_token });
@@ -452,15 +455,15 @@ async function handleAuthCallback(req, res) {
     });
 
     let roleMsg = VERIFIED_ROLE_ID
-      ? (joinResult.roleApplied ? 'O cargo de verificado foi aplicado.' : 'Você entrou no servidor, mas o cargo não foi aplicado. Confira a posição do cargo do bot.')
-      : 'Você foi autenticado e redirecionado para o servidor.';
+      ? (joinResult.roleApplied ? 'O cargo de verificado foi aplicado.' : 'Voc\u00ea entrou no servidor, mas o cargo n\u00e3o foi aplicado. Confira a posi\u00e7\u00e3o do cargo do bot.')
+      : 'Voc\u00ea foi autenticado e redirecionado para o servidor.';
     if (!mongoResult.ok) {
-      roleMsg += ` A autenticação funcionou, mas não consegui salvar no MongoDB (${mongoResult.reason}). Configure o MONGO_URI da Vercel igual ao do bot para o botão Validar reconhecer esta autorização.`;
+      roleMsg += ` A autentica\u00e7\u00e3o funcionou, mas n\u00e3o consegui salvar no MongoDB (${mongoResult.reason}). Configure o MONGO_URI da Vercel igual ao do bot para o bot\u00e3o Validar reconhecer esta autoriza\u00e7\u00e3o.`;
     }
 
     return res.send(renderResultPage({
       ok: true,
-      title: 'Verificação concluída',
+      title: 'Verifica\u00e7\u00e3o conclu\u00edda',
       message: roleMsg,
       user,
       guildId
@@ -469,8 +472,8 @@ async function handleAuthCallback(req, res) {
     console.error('[OAuth2] Erro:', err.data || err.message || err);
     return res.status(500).send(renderResultPage({
       ok: false,
-      title: 'Falha na verificação',
-      message: err.message || 'Não foi possível finalizar o OAuth2.'
+      title: 'Falha na verifica\u00e7\u00e3o',
+      message: err.message || 'N\u00e3o foi poss\u00edvel finalizar o OAuth2.'
     }));
   }
 }
@@ -482,7 +485,7 @@ app.use((_req, res) => res.status(404).sendFile(path.join(__dirname, '..', 'publ
 
 if (require.main === module) {
   app.listen(PORT, () => {
-    console.log(`BigBux Verify online em http://localhost:${PORT}`);
+    console.log(`BigBux online em http://localhost:${PORT}`);
   });
 }
 
