@@ -1,4 +1,4 @@
-﻿const express = require('express');
+const express = require('express');
 const crypto = require('crypto');
 const path = require('path');
 const mongoose = require('mongoose');

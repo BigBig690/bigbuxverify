@@ -1,17 +1,9 @@
 {
-  "name": "tempest-store-oauth2-vercel",
-  "version": "1.0.0",
-  "private": true,
-  "description": "Site separado de OAuth2 Discord para BigBux rodar na Vercel.",
-  "scripts": {
-    "dev": "node api/index.js",
-    "start": "node api/index.js"
-  },
-  "engines": {
-    "node": ">=20"
-  },
-  "dependencies": {
-    "express": "^4.22.1",
-    "mongoose": "^8.23.1"
-  }
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/api/index"
+    }
+  ]
 }
