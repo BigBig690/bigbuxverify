@@ -1,9 +1,26 @@
-{
-  "version": 2,
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/api/index"
-    }
-  ]
-}
+# BigBux Verify - Vercel Environment Variables
+PUBLIC_URL=https://bigbuxverify-3169.vercel.app
+AUTH_PUBLIC_URL=https://bigbuxverify-3169.vercel.app
+APP_URL=https://bigbuxverify-3169.vercel.app
+BASE_URL=https://bigbuxverify-3169.vercel.app
+BIGBUX_SITE_URL=https://bigbuxverify-3169.vercel.app
+
+DISCORD_CLIENT_ID=1508192384519766140
+DISCORD_CLIENT_SECRET=COLE_O_CLIENT_SECRET_RESETADO_AQUI
+DISCORD_REDIRECT_URI=https://bigbuxverify-3169.vercel.app/auth/discord/callback
+
+DISCORD_BOT_TOKEN=COLE_O_TOKEN_DO_BOT_AQUI
+DISCORD_GUILD_ID=1508173477956550878
+DISCORD_VERIFIED_ROLE_ID=COLE_O_ID_DO_CARGO_VERIFICADO
+VERIFY_ROLE_ID=COLE_O_ID_DO_CARGO_VERIFICADO
+
+MONGO_URI=COLE_A_MESMA_URI_DO_MONGODB_DO_BOT
+MONGODB_URI=COLE_A_MESMA_URI_DO_MONGODB_DO_BOT
+DISCORD_SCOPES=identify email guilds.join
+DISCORD_INVITE_URL=https://discord.gg/SEU_CONVITE
+SUCCESS_REDIRECT_URL=https://discord.com/channels/1508173477956550878
+OAUTH_STATE_SECRET=COLE_UM_TEXTO_GRANDE_ALEATORIO
+
+WELCOME_BANNER_URL=https://bigbuxverify-3169.vercel.app/welcome-banner.webp
+BIGBUX_WELCOME_BANNER_URL=https://bigbuxverify-3169.vercel.app/welcome-banner.webp
+BIGBUX_BANNER_URL=https://bigbuxverify-3169.vercel.app/welcome-banner.webp
